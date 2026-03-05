@@ -6,6 +6,14 @@ def main():
     dots = getLinesFromFileAsArray(path)
     dots = getNumbersFromStringArray(dots)
 
+    if len(dots) < 1:
+        print("В файле с точками нет точек.")
+        return
+
+    if len(dots) > 100:
+        print("В файле с точками более ста точек.")
+        return
+
     translateDotsToEllipsCenter(ellips, dots)
     resArr = checkDotsPositionToEllips(ellips, dots)
 
