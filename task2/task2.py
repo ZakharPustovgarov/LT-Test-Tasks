@@ -1,18 +1,26 @@
 def main():
-    path = input("Введите путь до файла с описанием эллипса:")
-    ellips = getLinesFromFileAsArray(path)
-    ellips = getNumbersFromStringArray(ellips)
-    path = input("Введите путь до файла с точками:")
-    dots = getLinesFromFileAsArray(path)
-    dots = getNumbersFromStringArray(dots)
+    ellips = []
+    dots = []
 
-    if len(dots) < 1:
-        print("В файле с точками нет точек.")
-        return
+    while True:
+        ellips = readInput("Введите путь до файла с описанием эллипса:")
+        if len(ellips) < 2:
+            print("В файле с описанием эллипса не хватает данных.\nПопробуйте ещё раз.\n")
+            continue
+        if len(ellips) > 2:
+            print("В файле с описанием эллипса слишком много данных.\nПопробуйте ещё раз.\n")
+            continue
+        break
 
-    if len(dots) > 100:
-        print("В файле с точками более ста точек.")
-        return
+    while True:
+        dots = readInput("Введите путь до файла с точками:")
+        if len(dots) < 1:
+            print("В файле с точками нет точек.\nПопробуйте ещё раз.\n")
+            continue
+        if len(dots) > 100:
+            print("В файле с точками более ста точек.\nПопробуйте ещё раз.\n")
+            continue
+        break
 
     translateDotsToEllipsCenter(ellips, dots)
     resArr = checkDotsPositionToEllips(ellips, dots)
@@ -20,6 +28,21 @@ def main():
     for res in resArr:
         print(res)
 
+def readInput(message):
+    while True:
+        value = []
+        try:
+            path = input(message)
+            value = getLinesFromFileAsArray(path)
+        except OSError:
+            print("Неверный путь до файла.\nПопробуйте ещё раз.\n")
+            continue
+
+        try:
+            value = getNumbersFromStringArray(value)
+            return value   
+        except ValueError:
+            print("Неверное содержание файла. В файле должны быть пары целых чисел.\nПопробуйте ещё раз.\n")    
     
 def getLinesFromFileAsArray(path):
     with open(path, "r") as file:
