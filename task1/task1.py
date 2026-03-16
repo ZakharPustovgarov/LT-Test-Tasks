@@ -5,8 +5,11 @@ def main():
     print(res1+res2)
 
 def countPath(arrId):
-    n = int(input(f"Введите n для {arrId}-го массива:"))
-    m = int(input(f"Введите m для {arrId}-го массива:"))
+    n = 0
+    m = 0
+    n = readInput(arrId, n, "n")
+    m = readInput(arrId, m, "m")
+
     baseArr = range(1, n+1)
     currentPos = 0
     currentNum = 1
@@ -20,6 +23,16 @@ def countPath(arrId):
             break
         currentNum = baseArr[currentPos]
     return res
+
+def readInput(arrId, value, valueName):
+    while True:
+        try:
+            value = int(input(f"Введите {valueName} для {arrId}-го массива:"))
+            break
+        except ValueError:
+            print(f"Некорректный тип. {valueName} должно быть целым числом. Попробуйте ещё раз.")
+    return value
+
 
 
 main()    
