@@ -1,8 +1,6 @@
 
 def main():
-    path = input("Введите путь до файла с массивом чисел:")
-    nums = getLinesFromFileAsArray(path)
-    nums = getNumbersFromStringArray(nums)
+    nums = readInput()
 
     arithMean = getArithmeticMean(nums)
     closestToMean = getClosestToArithmeticMean(nums, arithMean)
@@ -12,7 +10,28 @@ def main():
         print("20 ходов недостаточно для приведения всех элементов массива к одному числу")
     else: 
         print(steps)
-    
+
+
+def readInput():
+    while True:
+        path = input("Введите путь до файла с массивом чисел:")
+
+        try:       
+            nums = getLinesFromFileAsArray(path)
+        except OSError:
+            print("Неверный путь до файла.\nПопробуйте ещё раз.\n")
+            continue
+
+        try:       
+            nums = getNumbersFromStringArray(nums)
+        except ValueError:
+            print("Некорректный тип. В файле должны быть целые числа.\nПопробуйте ещё раз.\n")
+            continue
+
+        if len(nums) > 1:
+            return nums
+        else:
+            print("Недостаточно чисел в массиве.\nПопробуйте ещё раз.\n")
 
 def getLinesFromFileAsArray(path):
     with open(path, "r") as file:
@@ -24,12 +43,6 @@ def getNumbersFromStringArray(strArr):
     for str in strArr:
         res.append(int(str))
     return res
-
-def charToInt(char, isNegative):
-     if isNegative:
-         return int(char) * -1
-     else:
-         return int(char)
 
 def getArithmeticMean(nums):
     sum = 0;
