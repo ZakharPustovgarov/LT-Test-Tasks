@@ -42,7 +42,7 @@ def readInput(message):
             value = getNumbersFromStringArray(value)
             return value   
         except ValueError:
-            print("Неверное содержание файла. В файле должны быть пары целых чисел.\nПопробуйте ещё раз.\n")    
+            print("Неверное содержание файла. В файле должны быть пары рациональных чисел.\nПопробуйте ещё раз.\n")    
     
 def getLinesFromFileAsArray(path):
     with open(path, "r") as file:
@@ -53,7 +53,7 @@ def getNumbersFromStringArray(strArr):
     res = []
     for strng in strArr:
         buf = strng.split()
-        res.append([int(buf[0]), int(buf[1])])
+        res.append([float(buf[0]), float(buf[1])])
     return res           
 
 def translateDotsToEllipsCenter(ellips, dots):
